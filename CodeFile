@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+                  }
+       
+                       }
+    
+          stage ('jenkins-git')
+          {
+              steps{ 
+                  git branch: 'main', credentialsId: 'jenkins-git-ssh-int-24april', url: 'git@github.com:njayabharathreddy86/jenkin-24-april.git'
+              }
+          }
+     stage ('jenkins-git-checkout')
+          {
+              steps{ 
+                  checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'jenkins-git-ssh-int-24april', url: 'git@github.com:njayabharathreddy86/spring-code-maven-sql-24-april.git']])
+              }
+          }
+        
+    }       
+    
+}
